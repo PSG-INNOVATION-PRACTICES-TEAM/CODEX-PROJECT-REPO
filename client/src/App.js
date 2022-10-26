@@ -74,7 +74,7 @@ const App=()=> {
               </div>
               ) :
               (
-                <div className="output-box">
+              <div className="output-box">
                   <pre>{output}</pre>
                   <button onClick={() => { clearOutput() }} className="clear-btn">
                     Clear
@@ -82,7 +82,7 @@ const App=()=> {
                 </div>
               )}
           </div>
-        </div>
+      </div>
     </div>
   );
 }

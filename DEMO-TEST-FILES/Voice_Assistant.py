@@ -1,76 +1,73 @@
-import this
 import speech_recognition as sr
 import time
+import webbrowser
+import playsound
+import os
+import random
+from time import ctime
+from gtts import gTTS
 
 r = sr.Recognizer()
+mic = sr.Microphone(device_index=14)
 
-class User:
-    name=''
-    def set_name(self,name):
-        self.name=name
-    def get_name(self):
-        return self.name
 
-def there_exists(lst,text_data):
-    for term in lst:
-        if term in text_data:
-            return True
+# for index, name in enumerate(sr.Microphone.list_microphone_names()):
+#     print(f'{index}, {name}')
+# speak('100')
 
-def recognize_audio(follow_up=False):
-    if follow_up:
-        print(follow_up)
-    with sr.Microphone() as source:
+defaut_location = 'D:\\7th Semester\\PROJECT-WORK-PHASE-1\\CODEX-PROJECT-REPO\\DEMO-TEST-FILES'
+
+def record_audio(ask=False):
+    if ask:
+        speak(ask)
+    with mic as source:
+        r.adjust_for_ambient_noise(source)
+        voice_data=''
         try:
-            audio_data = r.listen(source,timeout=5)
-            print('Recognizing...')
-            text_data = r.recognize_google(audio_data,language='en-US')
-            return text_data
-        except sr.WaitTimeoutError:
-            print("Sorry, I didn't Hear you out!")
-            #recognize_audio()
+            audio = r.listen(source)
+            print('Recognizing')
+            voice_data=r.recognize_google(audio)
         except sr.UnknownValueError:
-            print("Sorry, I didn't get you! Can you repeat it again?")
-            #recognize_audio()
+            speak('Sorry I did not get that')
         except sr.RequestError:
-            print('Some problem with my speech recognition..')
-            #recognize_audio()
+            speak('Sorry My Speech Service is down!')
+        return voice_data
 
-def respond(query_string):
-    #Greeting
-    if there_exists(['hi','hello','halo','hiee'],query_string):
-        print('Hello! my name is Codex. How can I help You?')
-    
-    #Name
-    if there_exists(['what is your name',"what's your name","your name","name"],query_string):
-        if user.name:
-            print(f'Hello {user.name}. My name is Codex :)')
-        else:
-            print('Hello! my name is Codex.')
-            text_data = recognize_audio("What is Your Name?")
-            respond(text_data.lower())
-    
-    #Set User Name
-    if there_exists(['my Name is',"i'am","myself"],query_string):
-        name = query_string.split('')[-1].strip()
-        print(f'Hello {name}!. Good to See you!!')
-        user.set_name(name)
-    
-    #How are you
-    if there_exists(['how are you',"how you doin","what's up"],query_string):
-        print(f"I'am doin fine {user.name}. Nothing much just coding ^__^")
-    
-    #exit
-    if there_exists(['bye',"see you soon","ok then"],query_string):
-        print(f"Signing Off {user.name}. Going offline!!!")
+def speak(audio_string):
+    tts = gTTS(text=audio_string,lang='en')
+    r = random.randint(1,10000000)
+    audio_file = 'audio-'+str(r)+'.mp3'
+    tts.save(audio_file)
+    playsound.playsound(os.path.join(defaut_location,audio_file))
+    print(audio_string)
+    os.remove(audio_file)
 
-
+def respond(voice_data):
+    if 'what is your name' in voice_data:
+        speak('My name is CODEX')
+    elif 'what time is it' in voice_data:
+        speak(ctime())
+    elif 'search' in voice_data:
+        search_text = record_audio('What do you want to search for?')
+        url = 'https://google.com/search?q='+search_text
+        webbrowser.get().open(url)
+        speak('Here is what I found for'+search_text)
+    elif 'find location' in voice_data:
+        location = record_audio('Which location do you want to search for?')
+        url = 'https://google.nl/maps/place/'+location+'/&amp;'
+        webbrowser.get().open(url)
+        speak('Here is the location of '+location)
+    elif 'exit' in voice_data:
+        speak('See You soon. Bye!')
+        exit()
+    else:
+        speak('Sorry Can You Please repeat?')
+    
+#Driver Program
 time.sleep(1)
-user = User()
-print('Please Talk..')
-text_data=''
+speak('How Can I Help You ?')
+
 while 1:
-    text_data = recognize_audio()
-    print('You Said :',text_data)
-    text_data = text_data.lower()
-    response = respond(text_data)
-    print(response)
+    voice_data = record_audio()
+    print(voice_data)
+    respond(voice_data)
