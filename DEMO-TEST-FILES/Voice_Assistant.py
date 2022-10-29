@@ -8,12 +8,21 @@ from time import ctime
 from gtts import gTTS
 
 r = sr.Recognizer()
-mic = sr.Microphone(device_index=14)
+Microphone_list = list(sr.Microphone.list_microphone_names())
+i=0
+index=[]
+while i < len(Microphone_list):
+    if 'Microphone (2- C270 HD WEBCAM)' == Microphone_list[i]:
+        index.append(i)
+    i += 1
+index = index[-1]
+# print(index)
+mic = sr.Microphone(device_index=index)
 
 
-# for index, name in enumerate(sr.Microphone.list_microphone_names()):
-#     print(f'{index}, {name}')
-# speak('100')
+# # for index, name in enumerate(sr.Microphone.list_microphone_names()):
+# #     print(f'{index}, {name}')
+# # speak('100')
 
 defaut_location = 'D:\\7th Semester\\PROJECT-WORK-PHASE-1\\CODEX-PROJECT-REPO\\DEMO-TEST-FILES'
 
@@ -66,7 +75,6 @@ def respond(voice_data):
 #Driver Program
 time.sleep(1)
 speak('How Can I Help You ?')
-
 while 1:
     voice_data = record_audio()
     print(voice_data)
