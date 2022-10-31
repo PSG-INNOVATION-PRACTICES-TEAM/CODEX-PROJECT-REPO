@@ -4,6 +4,23 @@ import playsound
 import os
 import random
 from gtts import gTTS
+from Parse_algorithm import parse_statement
+
+
+#################### HELPER CODES ######################################
+
+# for index, name in enumerate(sr.Microphone.list_microphone_names()):
+#     print(f'{index}, {name}')
+# speak('100')
+
+
+# stmt = parse_statement('for i in range of one two three','loop declaration')
+# print(stmt)
+
+#################### HELPER CODES ######################################
+
+
+################################ INITIALISING THE RECOGNIZER AND INPUT DEVICE ###########################
 
 r = sr.Recognizer()
 Microphone_list = list(sr.Microphone.list_microphone_names())
@@ -17,16 +34,11 @@ index = index[-1]
 # print(index)
 mic = sr.Microphone(device_index=index)
 
-
-# for index, name in enumerate(sr.Microphone.list_microphone_names()):
-#     print(f'{index}, {name}')
-# speak('100')
-
 defaut_location = 'D:\\7th Semester\\PROJECT-WORK-PHASE-1\\CODEX-PROJECT-REPO'
 
-def parse_statement(stmt,intent):
-    pass
+################################ INITIALISING THE RECOGNIZER AND INPUT DEVICE ###########################
 
+############### RECORD FUNCTION TO RECORD THE MICROPHONE INPUT ###########################
 
 def record_audio(ask=False):
     if ask:
@@ -46,6 +58,9 @@ def record_audio(ask=False):
             voice_data=record_audio()
         return voice_data
 
+
+############### SPEAK FUNCTION TO SPEAK THE RESPONSES AND QUERIES ###########################
+
 def speak(audio_string):
     tts = gTTS(text=audio_string,lang='en')
     r = random.randint(1,10000000)
@@ -54,6 +69,9 @@ def speak(audio_string):
     playsound.playsound(os.path.join(defaut_location,audio_file))
     print(audio_string)
     os.remove(audio_file)
+
+
+############### RESPOND FUNCTION TO RESPOND ACCORDING TO THE INTENT ###########################
 
 def respond(voice_data):
     if 'name' in voice_data:
@@ -75,7 +93,7 @@ def respond(voice_data):
         speak('else if statement added successfully!')
     elif 'if' in voice_data:
         stmt = record_audio('please dictate your if condition')
-        stmt = parse_statement(stmt,'else if')
+        stmt = parse_statement(stmt,'if')
         print(stmt)
         speak('else if statement added successfully!')
     elif 'else' in voice_data:
@@ -92,7 +110,7 @@ def respond(voice_data):
     else:
         speak('Sorry! Could You Please repeat?')
     
-#Driver Program
+############################# Driver Program #######################################################
 time.sleep(1)
 speak('How Can I Help You ?')
 while 1:
