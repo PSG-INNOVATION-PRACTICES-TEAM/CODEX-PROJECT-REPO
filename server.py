@@ -1,7 +1,9 @@
-from flask import Flask,render_template,url_for,redirect,jsonify
+from flask import Flask,jsonify,request
 from Voice_assistant import record_audio,speak,respond
 from flask_cors import CORS, cross_origin
 import time
+import requests
+import json
 # import speech_recognition as sr
 
 #Initialising the App
@@ -58,7 +60,24 @@ def exit_program():
 @app.route('/compile',methods=["POST"])
 def run_program():
     speak('Running Your Program')
-    pass
+    print(request)
+    rt = request.get_json()
+    print(rt)
+    code = rt['code']
+    input = rt['input']
+    data = {
+        'code':code,
+        'language':"py",
+        'input':input
+    }
+    print(data)
+    url = 'https://codexweb.netlify.app/.netlify/functions/enforceCode'
+    r = requests.post(url,data=data)
+    # r = json.loads(r)
+    print(r)
+    # return jsonify({
+    #     'output':r
+    # })
 
 
 if __name__ == "__main__":
