@@ -4,8 +4,7 @@ import playsound
 import os
 import random
 from gtts import gTTS
-from Parse_algorithm import parse_statement
-
+from Parse_algorithm_1 import parse_statement
 
 #################### HELPER CODES ######################################
 
@@ -14,11 +13,19 @@ from Parse_algorithm import parse_statement
 # speak('100')
 
 
-# stmt = parse_statement('for i in range of one two three','loop declaration')
+# stmt = parse_statement('sum equals five')
+# print(stmt)
 # print(stmt)
 
 #################### HELPER CODES ######################################
 
+################################ INITIALISING MODEL AND CODE FILE ###########################
+
+# model = build_model()
+# file = open('code.txt','w+')
+with open('code.txt','w+') as file:
+    pass
+################################ INITIALISING MODEL AND CODE FILE ###########################
 
 ################################ INITIALISING THE RECOGNIZER AND INPUT DEVICE ###########################
 
@@ -31,11 +38,11 @@ while i < len(Microphone_list):
         index.append(i)
     i += 1
 index = index[-1]
-# print(index)
+
 mic = sr.Microphone(device_index=index)
 
 defaut_location = 'D:\\7th Semester\\PROJECT-WORK-PHASE-1\\CODEX-PROJECT-REPO'
-
+# print(index)
 ################################ INITIALISING THE RECOGNIZER AND INPUT DEVICE ###########################
 
 ############### RECORD FUNCTION TO RECORD THE MICROPHONE INPUT ###########################
@@ -78,32 +85,122 @@ def respond(voice_data):
         speak('My name is CODEX')
     elif 'assignment statement' in voice_data:
         stmt = record_audio('please dictate your assignment statement')
-        stmt = parse_statement(stmt,'assignment')
         print(stmt)
+        stmt = parse_statement(stmt)
+        print(stmt)
+        with open('code.txt','a+') as file:
+            file.write(stmt)
         speak('assignment statement added successfully!')
     elif 'arithmetic statement' in voice_data:
         stmt = record_audio('please dictate your arithmetic statement')
-        stmt = parse_statement(stmt,'arithmetic')
         print(stmt)
+        stmt = parse_statement(stmt)
+        print(stmt)
+        with open('code.txt','a+') as file:
+            file.write(stmt)
         speak('arithmetic statement added successfully!')
     elif 'else if' in voice_data:
         stmt = record_audio('please dictate your else if condition')
-        stmt = parse_statement(stmt,'else if')
         print(stmt)
+        stmt = parse_statement(stmt)+':'
+        print(stmt)
+        with open('code.txt','a+') as file:
+            file.write(stmt)
         speak('else if statement added successfully!')
     elif 'if' in voice_data:
         stmt = record_audio('please dictate your if condition')
-        stmt = parse_statement(stmt,'if')
         print(stmt)
+        stmt = parse_statement(stmt)+':'
+        print(stmt)
+        with open('code.txt','a+') as file:
+            file.write(stmt)
         speak('else if statement added successfully!')
     elif 'else' in voice_data:
         print('else:')
+        with open('code.txt','a+') as file:
+            file.write('else:')
         speak('else statement added successfully!')
     elif 'for loop' in voice_data:
         stmt = record_audio('please dictate your loop declration statement')
-        stmt = parse_statement(stmt,'loop declaration')
         print(stmt)
+        stmt = parse_statement(stmt)
+        stmt+= stmt.count('(')*')'
+        stmt+=':'
+        print(stmt)
+        with open('code.txt','a+') as file:
+            file.write(stmt)
         speak('loop added successfully!')
+    elif 'while loop' in voice_data:
+        stmt = record_audio('please dictate your loop declration statement')
+        print(stmt)
+        stmt = parse_statement(stmt)
+        stmt+= stmt.count('(')*')'
+        stmt+=':'
+        print(stmt)
+        with open('code.txt','a+') as file:
+            file.write(stmt)
+        speak('loop added successfully!')
+    elif 'import' in voice_data:
+        stmt = record_audio('please dictate your import statement')
+        print(stmt)
+        print(stmt)
+        with open('code.txt','a+') as file:
+            file.write(stmt)
+        speak('import statement added successfully!')
+    elif 'print sentence' in voice_data:
+        stmt = record_audio('please dictate your print sentence')
+        print(stmt)
+        stmt = 'print("'+stmt+'")'
+        print(stmt)
+        with open('code.txt','a+') as file:
+            file.write(stmt)
+        speak('print statement added successfully!')
+    elif 'print statement' in voice_data:
+        stmt = record_audio('please dictate your print statement')
+        print(stmt)
+        stmt = parse_statement(stmt)
+        close_parantheses = stmt.count('(')
+        stmt+=close_parantheses*')'
+        print(stmt)
+        with open('code.txt','a+') as file:
+            file.write(stmt)
+        speak('print statement added successfully!')
+    elif 'add line' in voice_data:
+        with open('code.txt','a+') as file:
+            file.write('\n')
+        speak('Line added successfully!')
+    elif 'delete line' in voice_data:
+        stmt = record_audio('which line number would you wish to delete?')
+        print(stmt)
+        number = int(parse_statement(stmt).replace(' ',''))
+        print(number)
+        with open('code.txt','r'):
+            lst = list(file.readlines())
+        with open('code.txt','w+') as file:
+            for num, line in enumerate(lst):
+                if num not in [number]:
+                    file.write(line)
+        speak('Line Deleted successfully!')
+    elif 'move' in voice_data:
+        stmt = record_audio('which line would you like to move')
+        print(stmt)
+        number = int(parse_statement(stmt).replace(' ',''))
+        print(number)
+    elif 'add indent' in voice_data:
+        with open('code.txt','a+') as file:
+            file.write('\t')
+        speak('indent added successfully!')
+    elif 'delete indent' in voice_data:
+        with open('code.txt','r'):
+            lst = list(file.readlines())
+        last_line = lst[-1]
+        if last_line[-1] == '\t':
+            last_line = last_line[:len(last_line)-1]
+        lst[-1]=last_line
+        with open('code.txt','w+') as file:
+            for num, line in enumerate(lst):
+                    file.write(line)
+        speak('indent deleted successfully!')
     elif 'exit' in voice_data:
         speak('See You soon. Bye!')
         exit()
@@ -114,6 +211,10 @@ def respond(voice_data):
 time.sleep(1)
 speak('How Can I Help You ?')
 while 1:
-    voice_data = record_audio()
-    print(voice_data)
-    respond(voice_data)
+    # voice_data = record_audio()
+    # voice_data = voice_data.lower()
+    # print(voice_data)
+    respond("add line")
+    with open('code.txt','w+') as file:
+        for line in file.readlines():
+            print(line)
