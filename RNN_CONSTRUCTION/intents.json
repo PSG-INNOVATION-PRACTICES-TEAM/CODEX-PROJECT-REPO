@@ -1,0 +1,128 @@
+{"intents": [
+        {"tag": "greeting",
+         "patterns": ["Hi", "Hii","How are you", "Is anyone there?", "Hello", "Good day"],
+         "responses": ["Hello, thanks for visiting", "Good to see you again", "Hi there, how can I help?"],
+         "context_set": ""
+        },
+        {"tag": "goodbye",
+         "patterns": ["Bye", "See you later", "Goodbye","Shining off"],
+         "responses": ["See you later, thanks for visiting", "Have a nice day", "Bye! Come back again soon.","Had a good time! See you soon."],
+         "context_set": ""
+        },
+        {"tag": "numbers",
+         "patterns": ["one","two","three","four","five","six","seven","eight","nine","zero"],
+         "responses": [],
+         "context_set": ""
+        },
+        {"tag": "keywords",
+         "patterns": ["False", "None", "True", "and", "as", "assert", "async", "await", "break", "class", "continue", "def", "del", "elif", "else", "except", "finally", "for", "from", "global", "if", "import", "in", "is", "lambda", "nonlocal", "not", "or", "pass", "raise", "return", "try", "while", "with", "yield"],
+         "responses": [],
+         "context_set": ""
+        },
+        {"tag": "else_if",
+         "patterns": ["else if"],
+         "responses": ["elif"],
+         "context_set": ""
+        },
+        {"tag": "inbuilt_functions",
+         "patterns": ["printof","print","charof","intof","floatof","doubleof","rangeof","range"],
+         "responses": [],
+         "context_set": ""
+        },
+        {"tag": "equals",
+         "patterns": ["isequalsto","equals","equals to","isequalto","assignedto","assign","equalto"],
+         "responses": ["="],
+         "context_set": ""
+        },
+        {"tag": "less than",
+         "patterns": ["lessthan","lesserthan","less"],
+         "responses": ["<"],
+         "context_set": ""
+        },
+        {"tag": "greater than",
+         "patterns": ["greaterthan","greater"],
+         "responses": [">"],
+         "context_set": ""
+        },
+        {"tag": "greater than equals",
+         "patterns": ["greaterthanequals","greaterthanorequals","greaterthanequalto","greaterthanequalsto","greaterthanorequalsto","greaterthanorequalto"],
+         "responses": [">="],
+         "context_set": ""
+        },
+        {"tag": "less than equals",
+         "patterns": ["lessthanequals","lessthanorequals","lessthanequalto","lessthanequalsto","lessthanorequalsto","lessthanorequalto"],
+         "responses": ["<="],
+         "context_set": ""
+        },
+        {"tag": "add",
+         "patterns": ["plus","addition","added","addedwith","add"],
+         "responses": ["+"],
+         "context_set": ""
+        },
+        {"tag": "subtract",
+         "patterns": ["minus","hyphen","subtarct","subractedwith"],
+         "responses": ["-"],
+         "context_set": ""
+        },
+        {"tag": "multiply",
+         "patterns": ["star","asterisk","multiply","product"],
+         "responses": ["*"],
+         "context_set": ""
+        },
+        {"tag": "divide",
+         "patterns": ["divide","dividedby","divided","slash"],
+         "responses": ["/"],
+         "context_set": ""
+        },
+        {"tag": "plus equals",
+         "patterns": ["plusequals"],
+         "responses": ["+="],
+         "context_set": ""
+        },
+        {"tag": "minus equals",
+         "patterns": ["minusequals"],
+         "responses": ["-="],
+         "context_set": ""
+        },
+        {"tag": "multiply equals",
+         "patterns": ["starequals"],
+         "responses": ["*="],
+         "context_set": ""
+        },
+        {"tag": "divide equals",
+         "patterns": ["slashequals"],
+         "responses": ["/="],
+         "context_set": ""
+        },
+        {"tag": "power",
+         "patterns": ["power","to the power of"],
+         "responses": ["**"],
+         "context_set": ""
+        },
+        {"tag": "integer_divide",
+         "patterns": ["doubleslash","slashslash"],
+         "responses": ["//"],
+         "context_set": ""
+        },
+        {"tag": "double_equals",
+         "patterns": ["equalsequals","doubleequals"],
+         "responses": ["=="],
+         "context_set": ""
+        },
+        {"tag": "logical_and",
+         "patterns": ["logicaland","ampersand"],
+         "responses": ["&"],
+         "context_set": ""
+        },
+        {"tag": "logical_or",
+         "patterns": ["logicalor"],
+         "responses": ["|"],
+         "context_set": ""
+        },
+        {"tag": "logical_not",
+         "patterns": ["logicalnot","cap"],
+         "responses": ["^"],
+         "context_set": ""
+        }
+   ]
+}
